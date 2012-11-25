@@ -1,0 +1,56 @@
+<h1>Listing banks</h1>
+
+<table frame="border" rules="all">
+  <tr>
+    <th>Bankname</th>
+    <th>年</th>
+    <th>月</th>
+    <th>日</th>
+    <th>Putkind</th>
+    <th>入金理由</th>
+    <th>入金金額</th>
+    <th>Paykind</th>
+    <th>出金理由</th>
+    <th>出金金額</th>
+    <th width="50">合計</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% total=0 %>
+<% totalPutting=0 %>
+<% totalPayment=0 %>
+<% @banks.each do |bank| %>
+  <tr>
+    <% total = total + bank.putting if bank.putting != nil %>
+    <% total = total - bank.payment if bank.payment != nil %>
+    <% totalPutting = totalPutting + bank.putting if bank.putting != nil %>
+    <% totalPayment = totalPayment + bank.payment if bank.payment != nil %>
+    <td><%= bank.bankname %></td>
+    <td align="right"><%= bank.year %></td>
+    <td align="right"><%= bank.month %></td>
+    <td align="right"><%= bank.day %></td>
+
+    <td><%= bank.putkind %></td>
+    <td><%= bank.putreason %></td>
+    <td align="right"><%= bank.putting %></td>
+
+    <td><%= bank.paykind %></td>
+    <td><%= bank.payreason %></td>
+    <td align="right"><%= bank.payment %></td>
+
+    <td align="right"><%= total %></td>
+    <td><%= link_to 'Show', bank %></td>
+    <td><%= link_to 'Edit', edit_bank_path(bank) %></td>
+    <td><%= link_to 'Destroy', bank, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+totalPutting = <%= totalPutting %><br />
+totalPayment = <%= totalPayment %><br />
+
+<%= link_to 'New Bank', new_bank_path %>

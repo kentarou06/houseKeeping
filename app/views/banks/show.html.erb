@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Bankname:</b>
+  <%= @bank.bankname %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @bank.year %>
+</p>
+
+<p>
+  <b>Month:</b>
+  <%= @bank.month %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%= @bank.day %>
+</p>
+
+<p>
+  <b>Putreason:</b>
+  <%= @bank.putreason %>
+</p>
+
+<p>
+  <b>Putting:</b>
+  <%= @bank.putting %>
+</p>
+
+<p>
+  <b>Putkind:</b>
+  <%= @bank.putkind %>
+</p>
+
+<p>
+  <b>Payreason:</b>
+  <%= @bank.payreason %>
+</p>
+
+<p>
+  <b>Payment:</b>
+  <%= @bank.payment %>
+</p>
+
+<p>
+  <b>Paykind:</b>
+  <%= @bank.paykind %>
+</p>
+
+
+<%= link_to 'Edit', edit_bank_path(@bank) %> |
+<%= link_to 'Back', banks_path %>

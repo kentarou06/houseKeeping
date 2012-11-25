@@ -1,0 +1,61 @@
+<%= form_for(@bank) do |f| %>
+  <% if @bank.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bank.errors.count, "error") %>
+	prohibited this bank from being saved:
+      </h2>
+
+      <ul>
+      <% @bank.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :bankname %><br />
+    <%= f.text_field :bankname %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br />
+    <%= f.number_field :year %>
+  </div>
+  <div class="field">
+    <%= f.label :month %><br />
+    <%= f.number_field :month %>
+  </div>
+  <div class="field">
+    <%= f.label :day %><br />
+    <%= f.number_field :day %>
+  </div>
+
+  <div class="field">
+    <%= f.label :putkind %><br />
+    <%= f.text_field :putkind %>
+  </div>
+  <div class="field">
+    <%= f.label :putreason %><br />
+    <%= f.text_field :putreason %>
+  </div>
+  <div class="field">
+    <%= f.label :putting %><br />
+    <%= f.number_field :putting %>
+  </div>
+
+  <div class="field">
+    <%= f.label :paykind %><br />
+    <%= f.text_field :paykind %>
+  </div>
+  <div class="field">
+    <%= f.label :payreason %><br />
+    <%= f.text_field :payreason %>
+  </div>
+  <div class="field">
+    <%= f.label :payment %><br />
+    <%= f.number_field :payment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
