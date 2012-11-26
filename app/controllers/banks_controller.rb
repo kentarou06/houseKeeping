@@ -22,10 +22,6 @@ class BanksController < ApplicationController
   end
 
   def totalize
-    bankname = params[:bankname]
-    year = params[:year]
-    month = params[:month]
-
     @banks = get_banks
     respond_to do |format|
       format.html { render :action => 'index' }
@@ -145,6 +141,7 @@ class BanksController < ApplicationController
     render :text => "#{s}"
   end
 
+
   def check_params(val_name, param)
     if param == nil
       @banks
@@ -170,6 +167,10 @@ class BanksController < ApplicationController
     @banks = check_params('payreason', params[:payreason])
     @banks = check_params('payment', params[:payment])
 
+    if params[:group] != nil
+      @banks = @banks.group(params[:group])
+    end
+
     @banks.where('id >= 0').order('year ASC, month ASC, day ASC')
   end
 
@@ -181,6 +182,7 @@ class BanksController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @banks }
+      format.xml  { render :xml  => @banks }
     end
   end
 
