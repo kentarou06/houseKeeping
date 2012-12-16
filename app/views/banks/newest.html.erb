@@ -1,0 +1,55 @@
+<h1>Newest Banks (SUMMARY)</h1>
+
+<% @banknames.each do |bankname| %>
+  <h2> <%= bankname.bankname %> </h2>
+  <% banks = @banks.where("bankname = ?", bankname.bankname) %>
+
+  <% group_paykinds = banks.group("paykind") %>
+  <table frame="border" rules="all">
+　　<tr>
+      <th>paykind</th>
+      <th>合計金額</th>
+   </tr>
+   <% total = 0 %>
+   <% group_paykinds.each do |paykind| %>
+     <% if paykind.paykind != "" %>
+       <% totalpay = 0 %>
+       <% bank_paykinds = banks.where("paykind = ?",paykind.paykind) %>
+       <% bank_paykinds.each do |bank| %>
+         <% totalpay += bank.payment if bank.payment != nil %>
+       <% end %>
+       <tr>
+         <td><%= paykind.paykind %></td>
+         <td align="right"><%= totalpay %></td>
+       </tr>
+       <% total += totalpay %>
+     <% end %>
+   <% end %>
+  </table>
+  合計 <%= total %>
+
+  <% group_putkinds = banks.group("putkind") %>
+  <table frame="border" rules="all">
+　　<tr>
+      <th>putkind</th>
+      <th>合計金額</th>
+   </tr>
+   <% total = 0 %>
+   <% group_putkinds.each do |putkind| %>
+     <% if putkind.putkind != "" %>
+       <% totalput = 0 %>
+       <% bank_putkinds = banks.where("putkind = ?",putkind.putkind) %>
+       <% bank_putkinds.each do |bank| %>
+         <% totalput += bank.putting if bank.putting != nil %>
+       <% end %>
+       <tr>
+         <td><%= putkind.putkind %></td>
+         <td align="right"><%= totalput %></td>
+       </tr>
+       <% total += totalput %>
+     <% end %>
+   <% end %>
+  </table>
+  合計 <%= total %>
+  <br />
+<% end %>

@@ -1,5 +1,25 @@
 # -*- coding: utf-8 -*-
 class BanksController < ApplicationController
+  def newest
+    @banks = get_banks
+    @banknames = @banks.group('bankname')
+
+    if false
+    @banks = Bank.select('bankname').group('bankname')
+
+    @banks.each do |bank|
+      bank.putting = Bank.where(:bankname => bank.bankname).sum('putting')
+      bank.payment = Bank.where(:bankname => bank.bankname).sum('payment')
+    end
+    end
+
+    respond_to do |format|
+      format.html # newest.html.erb
+      format.json { render json: @banks }
+      format.xml  { render :xml  => @banks }
+    end
+  end
+
   def remainder
     @banks = get_banks
 
