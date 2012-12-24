@@ -3,8 +3,15 @@
 <% @banknames.each do |bankname| %>
   <h2> <%= bankname.bankname %> </h2>
   <% banks = @banks.where("bankname = ?", bankname.bankname) %>
+  <% total_payment = @banks.where(:bankname => bankname.bankname)
+                            .sum("payment") %>
+  <% total_putting = @banks.where(:bankname => bankname.bankname)
+                            .sum("putting") %>
 
   <% group_paykinds = banks.group("paykind") %>
+  total payment : <%= total_payment %> <br />
+  total putting : <%= total_putting %> <br />
+  残り : <%= total_putting - total_payment %> <br />
   <table frame="border" rules="all">
 　　<tr>
       <th>paykind</th>
@@ -19,7 +26,9 @@
          <% totalpay += bank.payment if bank.payment != nil %>
        <% end %>
        <tr>
-         <td><%= paykind.paykind %></td>
+         <td>
+	   <%= link_to("#{paykind.paykind}", :controller => 'banks', :action => 'index', :bankname => bankname.bankname, :paykind => paykind.paykind) %>
+	 </td>
          <td align="right"><%= totalpay %></td>
        </tr>
        <% total += totalpay %>
@@ -43,13 +52,14 @@
          <% totalput += bank.putting if bank.putting != nil %>
        <% end %>
        <tr>
-         <td><%= putkind.putkind %></td>
+         <td>
+	   <%= link_to("#{putkind.putkind}", :controller => 'banks', :action => 'index', :bankname => bankname.bankname, :putkind => putkind.putkind) %>
+	 </td>
          <td align="right"><%= totalput %></td>
        </tr>
        <% total += totalput %>
      <% end %>
    <% end %>
   </table>
-  合計 <%= total %>
-  <br />
+  合計 <%= total %> <br />
 <% end %>
