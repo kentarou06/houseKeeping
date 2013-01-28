@@ -2,16 +2,7 @@
 class BanksController < ApplicationController
   def newest
     @banks = get_banks
-    @banknames = @banks.group('bankname')
-
-    if false
-    @banks = Bank.select('bankname').group('bankname')
-
-    @banks.each do |bank|
-      bank.putting = Bank.where(:bankname => bank.bankname).sum('putting')
-      bank.payment = Bank.where(:bankname => bank.bankname).sum('payment')
-    end
-    end
+    @banknames = @banks.group('bankname').order('bankname ASC')
 
     respond_to do |format|
       format.html # newest.html.erb

@@ -1,17 +1,30 @@
 <h1>Newest Banks (SUMMARY)</h1>
 
 <% @banknames.each do |bankname| %>
-  <h2> <%= bankname.bankname %> </h2>
+  <h2>
+    <%= link_to("#{bankname.bankname}", :controller => 'banks',
+    :action => 'index', :bankname => bankname.bankname) %>
+  </h2>
   <% banks = @banks.where("bankname = ?", bankname.bankname) %>
   <% total_payment = @banks.where(:bankname => bankname.bankname)
                             .sum("payment") %>
   <% total_putting = @banks.where(:bankname => bankname.bankname)
                             .sum("putting") %>
-
   <% group_paykinds = banks.group("paykind") %>
-  total payment : <%= total_payment %> <br />
-  total putting : <%= total_putting %> <br />
   残り : <%= total_putting - total_payment %> <br />
+
+<% years = banks.group("year") %>
+<% years.each do |year| %>
+  <%#= year.year %>
+  <% banks_year = banks.where("year = ?", year.year) %>
+  <% banks_month = banks_year.group("month") %>
+  <% banks_month.each do |month| %>
+    <%= link_to("#{month.year}/#{month.month}",
+	:controller => 'banks', :action => 'index',
+        :bankname => month.bankname, :year => month.year, :month => month.month) %>
+  <% end %>
+<% end %>
+
   <table frame="border" rules="all">
 　　<tr>
       <th>paykind</th>
@@ -27,7 +40,9 @@
        <% end %>
        <tr>
          <td>
-	   <%= link_to("#{paykind.paykind}", :controller => 'banks', :action => 'index', :bankname => bankname.bankname, :paykind => paykind.paykind) %>
+	   <%= link_to("#{paykind.paykind}",
+	       :controller => 'banks', :action => 'index',
+	       :bankname => bankname.bankname, :paykind => paykind.paykind) %>
 	 </td>
          <td align="right"><%= totalpay %></td>
        </tr>
@@ -53,7 +68,9 @@
        <% end %>
        <tr>
          <td>
-	   <%= link_to("#{putkind.putkind}", :controller => 'banks', :action => 'index', :bankname => bankname.bankname, :putkind => putkind.putkind) %>
+	   <%= link_to("#{putkind.putkind}",
+	       :controller => 'banks', :action => 'index',
+	       :bankname => bankname.bankname, :putkind => putkind.putkind) %>
 	 </td>
          <td align="right"><%= totalput %></td>
        </tr>
